@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pakistan Clock</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #1a1a2e;
+        font-family: "Arial", sans-serif;
+      }
+      .clock-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+      }
+      .clock {
+        position: relative;
+        border: 8px solid #16213e;
+        border-radius: 50%;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        background: radial-gradient(circle, #0f3460 0%, #16213e 100%);
+      }
+      #main-clock {
+        width: 300px;
+        height: 300px;
+      }
+      #left-clock,
+      #right-clock {
+        width: 200px;
+        height: 200px;
+      }
+      .hour,
+      .minute,
+      .second {
+        position: absolute;
+        transform-origin: 50% 100%;
+      }
+      .hour {
+        width: 8px;
+        background: #e94560;
+        border-radius: 4px;
+      }
+      .minute {
+        width: 6px;
+        background: #052143;
+        border-radius: 3px;
+      }
+      .second {
+        width: 2px;
+        background: #00fff5;
+        border-radius: 1px;
+      }
+      #main-clock .hour {
+        height: 80px;
+        top: 70px;
+        left: 146px;
+      }
+      #main-clock .minute {
+        height: 110px;
+        top: 40px;
+        left: 147px;
+      }
+      #main-clock .second {
+        height: 130px;
+        top: 20px;
+        left: 149px;
+      }
+      #left-clock .hour,
+      #right-clock .hour {
+        height: 50px;
+        top: 50px;
+        left: 96px;
+      }
+      #left-clock .minute,
+      #right-clock .minute {
+        height: 70px;
+        top: 30px;
+        left: 97px;
+      }
+      #left-clock .second,
+      #right-clock .second {
+        height: 85px;
+        top: 15px;
+        left: 99px;
+      }
+      .digital-time {
+        position: absolute;
+        bottom: 70px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #00fff5;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      #left-clock .digital-time,
+      #right-clock .digital-time {
+        bottom: 45px;
+        font-size: 14px;
+      }
+      .number {
+        position: absolute;
+        color: #00fff5;
+        font-weight: bold;
+        transform: translate(-50%, -50%);
+      }
+      #main-clock .number {
+        font-size: 20px;
+      }
+      #left-clock .number,
+      #right-clock .number {
+        font-size: 14px;
+      }
+      .clock-heading {
+        text-align: center;
+        color: #00fff5;
+        font-size: 18px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock-container">
+      <div>
+        <div id="left-clock" class="clock">
+          <div class="hour"></div>
+          <div class="minute"></div>
+          <div class="second"></div>
+          <div class="digital-time"></div>
+          <div class="number" style="top: 10px; left: 50%">12</div>
+          <div class="number" style="top: 47%; right: 10px">3</div>
+          <div class="number" style="bottom: 1px; left: 50%">6</div>
+          <div class="number" style="top: 47%; left: 10px">9</div>
+        </div>
+        <h2 class="clock-heading">New York Time</h2>
+      </div>
+      <div>
+        <div id="main-clock" class="clock">
+          <div class="hour"></div>
+          <div class="minute"></div>
+          <div class="second"></div>
+          <div class="digital-time"></div>
+          <div class="number" style="top: 15px; left: 50%">12</div>
+          <div class="number" style="top: 47%; right: 15px">3</div>
+          <div class="number" style="bottom: 1px; left: 50%">6</div>
+          <div class="number" style="top: 47%; left: 15px">9</div>
+        </div>
+        <h2 class="clock-heading">Pakistan Time</h2>
+      </div>
+      <div>
+        <div id="right-clock" class="clock">
+          <div class="hour"></div>
+          <div class="minute"></div>
+          <div class="second"></div>
+          <div class="digital-time"></div>
+          <div class="number" style="top: 10px; left: 50%">12</div>
+          <div class="number" style="top: 47%; right: 10px">3</div>
+          <div class="number" style="bottom: 1px; left: 50%">6</div>
+          <div class="number" style="top: 47%; left: 10px">9</div>
+        </div>
+        <h2 class="clock-heading">London Time</h2>
+      </div>
+    </div>
+
+    <script>
+      function updateClock(clockId, timezone) {
+        var now = new Date(
+          new Date().toLocaleString("en-US", { timeZone: timezone })
+        );
+        var hour = now.getHours() % 12;
+        var minute = now.getMinutes();
+        var second = now.getSeconds();
+        var millisecond = now.getMilliseconds();
+
+        var hourDegree = hour * 30 + minute * 0.5;
+        var minuteDegree = minute * 6 + second * 0.1;
+        var secondDegree = second * 6 + millisecond * 0.006;
+
+        document.querySelector(
+          `#${clockId} .hour`
+        ).style.transform = `rotate(${hourDegree}deg)`;
+        document.querySelector(
+          `#${clockId} .minute`
+        ).style.transform = `rotate(${minuteDegree}deg)`;
+        document.querySelector(
+          `#${clockId} .second`
+        ).style.transform = `rotate(${secondDegree}deg)`;
+
+        var ampm = now.getHours() >= 12 ? "PM" : "AM";
+        var hours = now.getHours() % 12 || 12;
+        var digitalTime =
+          hours.toString().padStart(2, "0") +
+          ":" +
+          minute.toString().padStart(2, "0") +
+          ":" +
+          second.toString().padStart(2, "0") +
+          " " +
+          ampm;
+        document.querySelector(`#${clockId} .digital-time`).textContent =
+          digitalTime;
+      }
+
+      function updateAllClocks() {
+        updateClock("left-clock", "America/New_York");
+        updateClock("main-clock", "Asia/Karachi");
+        updateClock("right-clock", "Europe/London");
+        requestAnimationFrame(updateAllClocks);
+      }
+
+      updateAllClocks(); // Initial call to start the animation
+    </script>
+  </body>
+</html>
